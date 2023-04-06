@@ -12,6 +12,7 @@ import {
     const [selectedItems, setSelectedItems] = useState<
       ResourceListProps['selectedItems']
     >([]);
+
   
     const resourceName = {
       singular: 'customer',
@@ -20,42 +21,66 @@ import {
   
     const items = [
       {
-        id: '111',
-        url: 'id111',
-        name: 'Mae Jemison',
-        location: 'Decatur, USA',
+        id: '1',
+        url: 'id1',
+        name: 'Notification 1',
+        date: 'January, 14',
       },
       {
-        id: '211',
-        url: 'id211',
-        name: 'Ellen Ochoa',
-        location: 'Los Angeles, USA',
+        id: '2',
+        url: 'id2',
+        name: 'Notification 2',
+        date: 'February, 22',
       },
       {
-        id: '311',
-        url: 'id311',
-        name: 'Joe Smith',
-        location: 'Arizona, USA',
+        id: '3',
+        url: 'id3',
+        name: 'Notification 3',
+        date: 'March, 12',
       },
       {
-        id: '411',
-        url: 'id411',
-        name: 'Haden Jerado',
-        location: 'Decatur, USA',
+        id: '4',
+        url: 'id4',
+        name: 'Notification 4',
+        date: 'March, 24',
       },
       {
-        id: '511',
-        url: 'id511',
-        name: 'Tom Thommas',
-        location: 'Florida, USA',
+        id: '5',
+        url: 'id5',
+        name: 'Notification 5',
+        date: 'April, 1',
       },
       {
-        id: '611',
-        url: 'id611',
-        name: 'Emily Amrak',
-        location: 'Texas, USA',
+        id: '6',
+        url: 'id6',
+        name: 'Notification 6',
+        date: 'April, 2',
       },
     ];
+
+        const action = (selectedItems:any) => {
+
+                return selectedItems.map((e:any) => items[+e-1] )
+        }
+
+
+      const arr =   [
+        {
+          content: 'Set as active',
+          onAction: () => console.log(action(selectedItems))
+        },
+        {
+          content: 'Set as inactive',
+          onAction: () => console.log('Todo: implement bulk remove tags'),
+        },
+        {
+          content: 'Delete notifications',
+          onAction: () => console.log('Todo: implement bulk delete'),
+        },
+      ];
+
+      
+
   
     const promotedBulkActions = [
       {
@@ -64,20 +89,7 @@ import {
       },
     ];
   
-    const bulkActions = [
-      {
-        content: 'Set as active',
-        onAction: () => console.log('Todo: implement bulk add tags'),
-      },
-      {
-        content: 'Set as inactive',
-        onAction: () => console.log('Todo: implement bulk remove tags'),
-      },
-      {
-        content: 'Delete notifications',
-        onAction: () => console.log('Todo: implement bulk delete'),
-      },
-    ];
+
   
     return (
       <LegacyCard>
@@ -88,14 +100,14 @@ import {
           selectedItems={selectedItems}
           onSelectionChange={setSelectedItems}
           promotedBulkActions={promotedBulkActions}
-          bulkActions={bulkActions}
+          bulkActions={arr}
           resolveItemId={resolveItemIds}
         />
       </LegacyCard>
     );
   
     function renderItem(item: typeof items[number], _: string, index: number) {
-      const {id, url, name, location} = item;
+      const {id, url, name, date} = item;
    
   
       return (
@@ -111,7 +123,7 @@ import {
        <Text variant="bodyMd" fontWeight="bold" as="h3">
             {name}
           </Text>
-          <div>{location}</div>
+          <div>{date}</div>
          </div> 
           <div style={{flexGrow:'1', display:'flex', justifyContent:'flex-end',alignItems:'center',paddingRight:'20px'}}>
             <Badge  status="success">Active</Badge>
@@ -127,6 +139,7 @@ import {
     function resolveItemIds({id}: {id: string}) {
       return id;
     }
+
   }
   
   
