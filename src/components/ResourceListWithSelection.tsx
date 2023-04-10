@@ -56,6 +56,24 @@ import {
         name: 'Notification 6',
         date: 'April, 2',
       },
+      {
+        id: '7',
+        url: 'id7',
+        name: 'Notification 7',
+        date: 'April, 2',
+      },
+      {
+        id: '8',
+        url: 'id8',
+        name: 'Notification 8',
+        date: 'April, 2',
+      },
+      {
+        id: '9',
+        url: 'id9',
+        name: 'Notification 9',
+        date: 'April, 2',
+      },
     ];
 
         const action = (selectedItems:any) => {

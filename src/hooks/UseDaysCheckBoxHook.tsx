@@ -8,8 +8,8 @@ type Day = {
 type UseDaysCheckBoxHook = (
   initialDays: Day[]
 ) => {
-  days: Day[];
-  handleDayChange: (dayIndex: number, isActive: boolean) => void;
+  days:any;
+  handleDayChange: any
 };
 
 const useDaysCheckBox: UseDaysCheckBoxHook = (initialDays) => {
