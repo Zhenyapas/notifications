@@ -1,5 +1,5 @@
 import { ChoiceList, Divider } from "@shopify/polaris";
-import useChoiceList from "../../../../hooks/UseChoiceListHook";
+import useChoiceList from "../../../../../hooks/UseChoiceListHook";
 import SearchField from "./BrowseProductsComponents/SearchField";
 
 

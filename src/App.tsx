@@ -1,17 +1,12 @@
-import {Page} from '@shopify/polaris';
 import NotificationsList from './pages/NotificationsList';
-import { Route, Routes,useLocation} from 'react-router-dom';
-
-import ResourceListWithSelection from './components/ResourceListWithSelection';
+import { Route, Routes,} from 'react-router-dom';
 import EditNotification from './pages/EditNotification';
+import CreateNotification from './pages/CreateNotification';
 
 
 
 
 function App() {
-
-  const path = useLocation();
-
 
 
   return (
@@ -20,8 +15,9 @@ function App() {
       
       <Routes>
 
-        <Route path={`/main`} element={<NotificationsList />} />
+        <Route path={`/`} element={<NotificationsList />} />
         <Route path={`/:id`} element={<EditNotification />} />
+        <Route path={`/createNotification`} element={<CreateNotification />} />
 
 
       </Routes>

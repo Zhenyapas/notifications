@@ -1,22 +1,21 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Select, Text, TextField } from "@shopify/polaris";
-import { useParams } from "react-router-dom";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
 import useSelect from "../../../hooks/UseSelectHook";
-import SheduleNotification from "../subComponents/SheduleNotification";
+import SheduleNotification from "./NotificationDetails/SheduleNotification";
 
 
 
-const NotificationDetails = () => {
+const NotificationDetails = ({id}:{id:string}) => {
 
 
-  const params = useParams();
+  
 
 
   const {value:selected,onChange:onChange1} = useChoiceList(['hidden']);
 
   const {value:value1,onChange:onChange2} = useSelect('Active');
 
-  const {value:value2,onChange:onChange3} = useSelect(params?.id || "");
+  const {value:value2,onChange:onChange3} = useSelect(id|| "");
 
     return (
 

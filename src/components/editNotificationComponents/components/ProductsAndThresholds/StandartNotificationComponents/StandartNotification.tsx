@@ -1,16 +1,14 @@
-import { AlphaCard, AlphaStack, ChoiceList, Divider, TextField } from "@shopify/polaris";
-import useChoiceList from "../../../hooks/UseChoiceListHook";
-import useSelect from "../../../hooks/UseSelectHook";
-import BrowseProducts from "./StandartNotificationComponents/BrowseProducts";
+import { AlphaCard, AlphaStack, TextField } from "@shopify/polaris";
+import useSelect from "../../../../../hooks/UseSelectHook";
+import BrowseProducts from "./BrowseProducts";
+
 
 const StandartNotifications = () => {
 
 
 
  const {value,onChange} = useSelect('1')
- const {value:selected,onChange:onChange1} = useChoiceList(['hidden']);
- const {value:selected2,onChange:onChange2} = useChoiceList(['hidden']);
-  
+
     return (
 
         <>

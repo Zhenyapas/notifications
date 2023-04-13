@@ -1,9 +1,10 @@
 import {AlphaCard,Select,Checkbox,AlphaStack} from '@shopify/polaris';
 import { useState } from 'react';
-import useDaysCheckBox from '../../../hooks/UseDaysCheckBoxHook';
-import useSelect from '../../../hooks/UseSelectHook';
+import useDaysCheckBox from '../../../../hooks/UseDaysCheckBoxHook';
+
+import useSelect from '../../../../hooks/UseSelectHook';
  
-import { timeZone } from '../../../variables/timeZone';
+import { timeZone } from '../../../../variables/timeZone';
 
 const initialDays = [
   { day: "Mon", active: false },
@@ -18,11 +19,11 @@ const initialDays = [
   function SheduleNotification() {
 
     const weekDays: IDay[] = [
-      { day: "Mon", active: true },
-      { day: "Tue", active: true },
+      { day: "Mon", active: false },
+      { day: "Tue", active: false },
       { day: "Wed", active: false },
       { day: "Thu", active: false },
-      { day: "Fri", active: true },
+      { day: "Fri", active: false },
       { day: "Sat", active: false },
       { day: "Sun", active: false },
     ];

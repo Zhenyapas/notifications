@@ -13,7 +13,7 @@ function NotificationsList() {
 
       <Page
         title="Notifications"
-        primaryAction={{content: 'Create notification', disabled: false}}
+        primaryAction={{content: 'Create notification', disabled: false, url: 'createNotification'}}
       >
 
         <ResourceListWithSelection />

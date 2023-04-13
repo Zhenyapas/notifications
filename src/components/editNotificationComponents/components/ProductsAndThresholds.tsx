@@ -1,6 +1,8 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Divider, Text, } from "@shopify/polaris";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
-import StandartNotifications from "../subComponents/StandartNotification";
+
+import StandartNotifications from "./ProductsAndThresholds/StandartNotificationComponents/StandartNotification";
+
 
 
 

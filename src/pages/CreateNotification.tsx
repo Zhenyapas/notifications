@@ -1,5 +1,4 @@
 import {Page} from '@shopify/polaris';
-import { useParams } from 'react-router-dom';
 import AdditionalSettings from '../components/AdditionalSettings';
 import Locations from '../components/editNotificationComponents/components/Locations';
 import NotificationDetails from '../components/editNotificationComponents/components/NotificationDetails';
@@ -13,16 +12,16 @@ import Save from '../components/editNotificationComponents/components/Save';
 
 
 
-function EditNotification() {
+function CreateNotification() {
 
 
-    const params = useParams();
+
 
   return (
 
       <Page
         breadcrumbs={[{content: 'Notifications', url: '/'}]}
-        title="Edit Notification"
+        title="Create Notification"
         secondaryActions={[
           {
             content: 'Send now',
@@ -35,7 +34,7 @@ function EditNotification() {
 
       <div style={{marginTop:'20px'}}>
             
-          <NotificationDetails id={params?.id || ''}  />
+          <NotificationDetails id='' />
 
           <ProductsAndNotifications />
 
@@ -63,4 +62,4 @@ function EditNotification() {
 
 
 
-export default EditNotification;
+export default CreateNotification;

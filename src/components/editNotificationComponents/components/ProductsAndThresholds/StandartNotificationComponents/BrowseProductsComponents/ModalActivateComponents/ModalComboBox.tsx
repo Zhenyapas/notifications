@@ -31,6 +31,9 @@ const ModalComboBox = ({type}:{type:string}) => {
             onChange={handleChanges}
 
             />
+        
+        
+
         </>
     )
 

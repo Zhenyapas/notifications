@@ -1,19 +1,14 @@
-import {Button, Modal, LegacyStack, DropZone, Checkbox} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
-import ResourceListWithSelection from '../../../../ResourceListWithSelection';
-import ModalComboBox from './ModalActivateComponents/ModalComboBox';
+import { Modal, LegacyStack,} from '@shopify/polaris';
+import SearchListWithSelection from './ModalActivateComponents/SearchListWithSelection';
+
 
 function OpenModal({onClose,type}:{onClose:(flag:boolean) => void,type:string}) {
-
-
-
 
 
   return (
     <>
       <Modal
         large
-       
         open={true}
         onClose={() => onClose(false)}
         title={`Add ${type}`}
@@ -29,10 +24,12 @@ function OpenModal({onClose,type}:{onClose:(flag:boolean) => void,type:string}) 
         ]}
       >
         <Modal.Section>
-            <ModalComboBox type={type}/>
+       
+         
+    
           <LegacyStack vertical>
             
-            <ResourceListWithSelection />
+            <SearchListWithSelection type={type} />
           </LegacyStack>
         </Modal.Section>
       </Modal>
