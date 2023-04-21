@@ -11,7 +11,7 @@ const NotificationDetails = ({id}:{id:string}) => {
   
 
 
-  const {value:selected,onChange:onChange1} = useChoiceList(['hidden']);
+  const {value:selected,onChange:onChange1} = useChoiceList(['optional']);
 
   const {value:value1,onChange:onChange2} = useSelect('Active');
 
@@ -57,16 +57,18 @@ const NotificationDetails = ({id}:{id:string}) => {
                       title="Send notification instantly "
                       
                       choices={[
-                        {label: 'Send notification instantly', value: 'hidden',
-                      helpText:'You will be notified in real-time each time a product hits your chosen low inventory threshold.'},
                         {label: 'Send notification on a schedule', value: 'optional',
                       helpText:'Your low inventory products will be batched into a single notification and sent on a schedule you choose.'},
                       ]}
                       selected={selected}
-                      onChange={(e) => onChange1(e)}
                     />
-              
 
+
+           
+
+             
+              
+                
               </AlphaStack>
 
   
@@ -75,15 +77,9 @@ const NotificationDetails = ({id}:{id:string}) => {
 
 
             <div style={{marginTop:'30px'}}></div>
-            
-            { (selected[0] === 'optional') &&
+         
             <SheduleNotification />
-            }
-
-
-
-            
-            
+         
             
         </Columns>
     )

@@ -3,22 +3,33 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 
-import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
 import { AppProvider } from "@shopify/polaris";
 import en from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 import { BrowserRouter } from 'react-router-dom';
+import { setUpStore } from './store';
+import { Provider } from 'react-redux';
+import App from './App';
+
+
 const container:any = document.getElementById("root");
 const root = createRoot(container);
+
+
+const store = setUpStore();
 
 
 root.render(
   <BrowserRouter  basename={process.env.PABLIC_URL}>
 
     <AppProvider i18n={en}>
-      <App />
+      
+      <Provider store={store}>
+        <App />
+      </Provider>
+       
+
     </AppProvider>
     
   </BrowserRouter>

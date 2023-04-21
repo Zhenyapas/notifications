@@ -7,9 +7,30 @@ import {
     AutoSelection,
   } from '@shopify/polaris';
   import {SearchMinor} from '@shopify/polaris-icons';
-  import {useState, useCallback, useMemo} from 'react';
+  import {useState, useCallback, useMemo, useEffect} from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { fetchLocations } from '../../../../store/actions/locationsActions';
+
   
   function LocationComboBox({type}:{type:string}) {
+
+    const locations = useAppSelector((state) => state.locations);
+    const dispatch = useAppDispatch();
+
+
+
+
+
+    useEffect(() => {
+
+      dispatch(fetchLocations());
+      console.log(locations);
+
+    },[]);
+
+ 
+
+
     const deselectedOptions = useMemo(
       () => [
         {value: 'custom', label: 'My custom Location'},

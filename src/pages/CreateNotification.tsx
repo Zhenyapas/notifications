@@ -41,9 +41,7 @@ function CreateNotification() {
           <NotificationRecipients />
 
           <Locations />
-
-          <AdditionalSettings />
-
+          
           <Save />
 
           
