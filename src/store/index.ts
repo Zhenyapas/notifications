@@ -1,9 +1,13 @@
+
 import {combineReducers, configureStore } from "@reduxjs/toolkit";
 import  locationsReducer  from './slices/locationsSlice';
+import  specificProductsReducer from './slices/specificProductsSlice';
+
 
 const rootReducer = combineReducers({
     
-    locations:locationsReducer
+    locations:locationsReducer,
+    specificProducts:specificProductsReducer
 
 })
 

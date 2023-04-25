@@ -40,27 +40,7 @@ const initialState: ILocationsData= {
 
     loading:false,
     error: '',
-    locations:[{id	:	79534555410,
-        name	:	'My Custom Location',
-        address1	:	'123 Main St',
-        address2	:	null,
-        city	:	'Toronto',
-        zip	:	'A1A 1A1',
-        province	:	'Ontario',
-        country	:	'CA',
-        phone	:	'555-5555',
-        created_at	:	'2023-03-11T09:55:02-05:00',
-        updated_at	:	'2023-03-11T09:55:03-05:00',
-        country_code	:	'CA',
-        country_name	:	'Canada',
-        province_code	:	'ON',
-        legacy	:	false,
-        active	:	true,
-        admin_graphql_api_id	:	'gid://shopify/Location/79534555410',
-        localized_country_name	:	'Canada',
-        localized_province_name	:	'Ontario',
-    }
-        ],
+    locations:[],
 
 }
 
@@ -76,7 +56,7 @@ export const locationsSlice = createSlice({
         fetching(state) {
 
             state.loading = true;
-            console.log(state.loading);
+            
         },
 
         fetchSuccess(state, action: PayloadAction<ILocationsResponce>){
@@ -86,7 +66,7 @@ export const locationsSlice = createSlice({
 
             state.loading = false;
             state.locations = action.payload.locations;
-            console.log(action.payload);
+           
 
 
         },

@@ -9,35 +9,49 @@ import {
   import {SearchMinor} from '@shopify/polaris-icons';
   import {useState, useCallback, useMemo, useEffect} from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchLocations } from '../../../../store/actions/locationsActions';
+import { fetchLocations } from '../../../../store/actions/notificationsActions';
 
   
   function LocationComboBox({type}:{type:string}) {
 
-    const locations = useAppSelector((state) => state.locations);
+    const locationsData = useAppSelector((state) => state.locations);
     const dispatch = useAppDispatch();
 
 
+    
 
+
+    useEffect(() => {
+
+      console.log(locationsData);
+
+    },[locationsData]);
 
 
     useEffect(() => {
 
       dispatch(fetchLocations());
-      console.log(locations);
+      
 
     },[]);
+
+
+
 
  
 
 
     const deselectedOptions = useMemo(
-      () => [
-        {value: 'custom', label: 'My custom Location'},
-        {value: 'shop', label: 'Shop location'},
-        {value: 'snow city', label: 'Snow City Warehouse'},
-      ],
-      [],
+
+      () =>  {
+       
+       return locationsData.locations.map((e) => {
+          return {value: e.name, label: e.name}
+        })
+
+      },
+       
+      [locationsData]
     );
   
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);

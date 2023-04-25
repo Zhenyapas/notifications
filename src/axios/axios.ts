@@ -13,7 +13,11 @@ export const getLocationsData = {
 
     method: 'GET',
     url: 'https://stock-notify-381217.ue.r.appspot.com/api/locations/',
-    headers: {'Access-Control-Allow-Origin' : '*'}
+};
 
+export const getSpecificProductsData = {
+
+    method: 'GET',
+    url: 'https://stock-notify-381217.ue.r.appspot.com/api/products/',
 };
 

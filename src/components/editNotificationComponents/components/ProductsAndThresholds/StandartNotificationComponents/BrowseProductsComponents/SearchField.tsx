@@ -43,13 +43,17 @@ const SearchField = ({type}:{type:string}) => {
             }
             />
 
-            {(isModal) && <OpenModal 
+            {(isModal) && 
+            
+            <OpenModal 
             
             type={type}
             onClose={(e) => { 
                 setModal(e);
                 setValue('');
-                }} />}
+             }}
+                
+             />}
 
 
         </>
