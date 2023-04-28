@@ -1,8 +1,50 @@
 import { Modal, LegacyStack,} from '@shopify/polaris';
+import { useCallback, useEffect, useState } from 'react';
 import SearchListWithSelection from './ModalActivateComponents/SearchListWithSelection';
 
+export interface IData {
 
-function OpenModal({onClose,type}:{onClose:(flag:boolean) => void,type:string}) {
+  selected: string[];
+  subSelected: {
+    [key: string]: string[] 
+    
+  } 
+}
+
+
+function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:string,pushData:(data:any) => void }) {
+
+
+
+
+  
+
+
+
+  const [isDisabled,setDisabled] = useState(true)
+  const [data,setData] = useState<IData|false>(false)
+
+
+  useEffect(() => pushData(data),[data]);
+
+
+  const pullData = (obj:any) => {
+
+
+    console.log("MODAL")
+
+    console.log(obj);
+
+    ((obj.selected.length !== 0 ) || (!obj.subSelected) || (Object.entries(obj.subSelected)?.length !== 0))  
+    ? setDisabled(false) : setDisabled(true);
+
+    
+
+    setData(obj);
+
+  }
+
+ 
 
 
   return (
@@ -14,7 +56,11 @@ function OpenModal({onClose,type}:{onClose:(flag:boolean) => void,type:string}) 
         title={`Add ${type}`}
         primaryAction={{
           content: 'Add',
-          onAction: () => console.log('Add'),
+          onAction: () => {
+            console.log(data);
+            onClose(false);
+          },
+          disabled:isDisabled,
         }}
         secondaryActions={[
           {
@@ -29,7 +75,10 @@ function OpenModal({onClose,type}:{onClose:(flag:boolean) => void,type:string}) 
     
           <LegacyStack vertical>
             
-            <SearchListWithSelection type={type} />
+            <SearchListWithSelection type={type} pullData={pullData} />
+
+   {/*         {(data) &&  <ProductsList obj={data} productsData={productsData}  /> } */}
+
           </LegacyStack>
         </Modal.Section>
       </Modal>

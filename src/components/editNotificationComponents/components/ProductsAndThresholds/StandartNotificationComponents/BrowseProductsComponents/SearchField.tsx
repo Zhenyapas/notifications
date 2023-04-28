@@ -1,9 +1,11 @@
 import { Button, Icon, TextField } from "@shopify/polaris";
-import { useCallback, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import {
     SearchMinor
   } from '@shopify/polaris-icons';
-import OpenModal from "./ModalActivate";
+import OpenModal, { IData } from "./ModalActivate";
+import ProductsList from "./ModalActivateComponents/ProductsList";
+import { useAppSelector } from "../../../../../../hooks/redux";
 
 
 
@@ -16,12 +18,31 @@ const SearchField = ({type}:{type:string}) => {
     const [value,setValue] = useState('');
     const [isModal, setModal] = useState(false);
 
+    const [data,setData] = useState<any>(false);
+
+    const productsData = useAppSelector((state) => state.specificProducts.products);
+
+
+    
+   
+
     const handleChanges = useCallback((e:string) => {
 
         setValue(e);
         setModal(!isModal);
 
     },[])
+
+
+    const pullData = (obj:IData):void => {
+
+       console.log(obj)
+       setData(obj);
+
+    }
+
+
+   
 
 
     return (
@@ -43,8 +64,13 @@ const SearchField = ({type}:{type:string}) => {
             }
             />
 
+
+            <ProductsList object={data} productsData={productsData}  /> 
+
+
             {(isModal) && 
             
+           
             <OpenModal 
             
             type={type}
@@ -52,6 +78,8 @@ const SearchField = ({type}:{type:string}) => {
                 setModal(e);
                 setValue('');
              }}
+
+             pushData = { pullData }
                 
              />}
 

@@ -9,7 +9,7 @@ import SearchField from "./BrowseProductsComponents/SearchField";
 const BrowseProducts = ({title}:{title:string}) => {
 
 
-    const {value:selected,onChange:onChange1} = useChoiceList(['hidden']);
+    const {value:selected,onChange:onChange1} = useChoiceList(['optional1']);
     let label1 = 'All products (storewide)'
 
     if(title ==='Exclude from this notification')  label1='None';

@@ -57,8 +57,6 @@ const ProductsAndNotifications= () => {
                       choices={[
                         {label: 'Standard notification', value: 'hidden',
                       helpText:'Choose a single threshold for your selected products.'},
-                        {label: 'CSV notification', value: 'optional',
-                      helpText:'Choose different thresholds for different products. Recommended for stores with large numbers of products.'},
                       ]}
                       selected={selected}
                       onChange={(e) => onChange1(e)}

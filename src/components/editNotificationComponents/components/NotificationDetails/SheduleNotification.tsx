@@ -36,7 +36,7 @@ const initialDays = [
     }
 
 
-    const {value:value1,onChange:onChange1} = useSelect('daily');
+   
     const {value:value2,onChange:onChange2} = useSelect(timeZone().arrDate[0]);
     const {value:value3,onChange:onChange3} = useSelect(timeZone().timeZones[0]);
 
@@ -48,12 +48,7 @@ const initialDays = [
             <AlphaCard>
               <AlphaStack gap="4">
 
-                <Select
-                  label="Schedule type"
-                  options={[{label:'Daily',value:'daily'},{label:'Weakly',value:'weakly'}, {label:'Monthly',value:'monthly'}]}
-                  value={value1}
-                  onChange={(e) => onChange1(e)}
-                />
+
 
                 <DaysCheckBox days={days} changeDays={changeDays} />
 

@@ -57,6 +57,10 @@ import { fetchLocations } from '../../../../store/actions/notificationsActions';
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState(deselectedOptions);
+
+
+
+    useEffect(()=> console.log(selectedOptions),[selectedOptions]);
   
     const updateText = useCallback(
       (value: string) => {
