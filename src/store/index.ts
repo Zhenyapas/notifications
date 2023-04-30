@@ -1,10 +1,11 @@
 
 import {combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import  locationsReducer  from './slices/locationsSlice';
-import  specificProductsReducer from './slices/specificProductsSlice';
-import  createNotificationDataReducer from './slices/createNotificationDataSlice';
-import  recipientsReducer from './slices/recipientsSlice';
+import  locationsReducer  from './createNotificationSlices/locationsSlice';
+import  specificProductsReducer from './createNotificationSlices/specificProductsSlice';
+import  createNotificationDataReducer from './createNotificationSlices/createNotificationDataSlice';
+import  recipientsReducer from './createNotificationSlices/recipientsSlice';
+import  notificationsReducer from './NotificationsSlices/NotificationsSlices';
 
 const rootReducer = combineReducers({
     
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     notification_recipients:recipientsReducer,
 
 
+    notificationsData:notificationsReducer,
     createNotificationData:createNotificationDataReducer
 
 })

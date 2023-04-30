@@ -1,6 +1,8 @@
 import { AlphaCard, AlphaStack, Box, Button,  Columns, Divider, Text,  } from "@shopify/polaris";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../../../hooks/redux";
 import { NotificationRecipient } from "../../../models/notificationsResponce";
+import { setNotificationRecipients } from "../../../store/actions/notificationsActions";
 import OpenModalRecipients from "./NotificationRecipients/OpenRecipientsModal";
 import Recipient from "./NotificationRecipients/Recipient";
 
@@ -15,12 +17,17 @@ const NotificationRecipients = () => {
 
   const [isModal,setModal] = useState(false);
 
+  const dispatch = useAppDispatch()
+
 
 
   const [arrRecipients,setArrRecipient] = useState<NotificationRecipient[]>([])
 
 
-  useEffect(() => console.log(arrRecipients),[arrRecipients])
+  useEffect(() => {
+    console.log(arrRecipients)
+    dispatch(setNotificationRecipients(arrRecipients));
+  },[arrRecipients])
 
 
  

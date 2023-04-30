@@ -1,12 +1,13 @@
-import { getNotificationsData } from './../../axios/axios';
+import { getNotificationsData,deleteNotificationAxios, postNewNotification } from './../../axios/axios';
 import { getLocationsData,getSpecificProductsData} from '../../axios/axios';
-import {locationsSlice } from '../slices/locationsSlice';
+import {locationsSlice } from '../createNotificationSlices/locationsSlice';
 import { AppDispatch } from "../index";
 import axios from "axios";
-import { specificProductsSlice } from '../slices/specificProductsSlice';
-import {createNotificationDataSlice} from '../slices/createNotificationDataSlice';
-import { recipientsSlice} from '../slices/recipientsSlice';
+import { specificProductsSlice } from '../createNotificationSlices/specificProductsSlice';
+import {createNotificationDataSlice, INotificationData} from '../createNotificationSlices/createNotificationDataSlice';
+import { recipientsSlice} from '../createNotificationSlices/recipientsSlice';
 import { IResponseNotifications, NotificationRecipient } from '../../models/notificationsResponce';
+import { notificationsSlice } from '../NotificationsSlices/NotificationsSlices';
 
 
 
@@ -16,7 +17,11 @@ export const fetchNotificationData = () => {
       try {
 
          dispatch(recipientsSlice.actions.fetching()); 
+         dispatch(notificationsSlice.actions.fetching()); 
          const response:IResponseNotifications = await  (await axios.request(getNotificationsData)).data;
+
+        // set Notifications Data
+         dispatch(notificationsSlice.actions.fetchSuccess(response));
 
         //set notification_recipients data
          const recipientsData: NotificationRecipient[] = response.map(obj => obj.notification_recipients).flat(); 
@@ -66,6 +71,65 @@ export const fetchLocations = () => {
         }
     }
  }
+
+
+ export const deleteNotification = (indexArr:string[]) => {
+  return async (dispatch:AppDispatch) => {
+
+      try {
+
+         dispatch(notificationsSlice.actions.fetching());
+         
+         dispatch(notificationsSlice.actions.deleteNotification(indexArr));
+
+         const deletePromises = indexArr.map(id => axios.request(deleteNotificationAxios(id)));
+
+    
+         const results = await Promise.allSettled(deletePromises);
+
+         results.forEach((result, index) => {
+           if (result.status === 'rejected') {
+             console.log(`Запрос с id ${indexArr[index]} завершился ошибкой: ${result.reason}`);
+           } else { console.log(result)};
+         });
+
+         dispatch(notificationsSlice.actions.setLoading(false))
+
+         
+
+
+      }
+
+
+      catch(e) {
+          console.log(e);
+          dispatch(specificProductsSlice.actions.fetchError(e as Error));
+      }
+  }
+}
+
+
+
+export const postNewNote = (data:INotificationData) => {
+  return async (dispatch:AppDispatch) => {
+
+      try {
+
+         dispatch(notificationsSlice.actions.fetching());
+
+         const post = await axios.request(postNewNotification(data));
+         const response:IResponseNotifications = await  (await axios.request(getNotificationsData)).data;
+
+         dispatch(notificationsSlice.actions.fetchSuccess(response));
+         dispatch(notificationsSlice.actions.setLoading(false))
+
+      }
+      catch(e) {
+          console.log(e);
+          dispatch(createNotificationDataSlice.actions.fetchError(e as Error));
+      }
+  }
+}
 
 
 interface SelectedObj {

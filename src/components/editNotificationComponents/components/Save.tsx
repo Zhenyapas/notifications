@@ -1,24 +1,54 @@
 import { Button } from "@shopify/polaris";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../hooks/redux";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { postNewNote } from "../../../store/actions/notificationsActions";
 
 
 
 const Save = () => {
 
 
-    const data = useAppSelector(state => state.createNotificationData.data);
+    const createNotificationData = useAppSelector(state => state.createNotificationData);
+
+    const {data,error} = createNotificationData;
+
+    const dispatch = useAppDispatch()
 
     const [newData,updateData] = useState(data)
 
-    useEffect(() =>  updateData(data), [data])
+    const navigate = useNavigate();
+
+
+
+    useEffect(() =>  updateData(data), [createNotificationData])
 
 
     return (
 
         <div style={{marginTop:'30px',marginBottom:'30px',display:"flex",justifyContent:'flex-end'}}>
 
-            <Button primary onClick={() => console.log(newData)}>Save</Button>
+            <Button 
+                primary   
+                onClick={(() => {
+
+                    console.log(newData)
+
+                    if(error) {
+
+                        // Here could be validation
+                        return
+                    }
+
+                    dispatch(postNewNote(newData))
+                    
+                    navigate('/')
+
+
+                })}
+            >
+            Save
+            </Button>
 
         </div>
 

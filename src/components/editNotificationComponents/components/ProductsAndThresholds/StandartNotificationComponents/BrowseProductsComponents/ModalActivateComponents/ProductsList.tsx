@@ -6,7 +6,7 @@ import {
   } from '@shopify/polaris';
 
 import { useEffect, useState } from 'react';
-import { Product } from '../../../../../../../store/slices/specificProductsSlice';
+import { Product } from '../../../../../../../store/createNotificationSlices/specificProductsSlice';
 import { IData } from '../ModalActivate';
 
   

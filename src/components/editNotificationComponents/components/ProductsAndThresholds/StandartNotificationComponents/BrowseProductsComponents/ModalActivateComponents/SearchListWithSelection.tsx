@@ -15,7 +15,7 @@ import ModalComboBox from './ModalComboBox';
 import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/redux';
 import { fetchProducts } from '../../../../../../../store/actions/notificationsActions';
 import {ImageMajor} from '@shopify/polaris-icons';
-import { Product } from '../../../../../../../store/slices/specificProductsSlice';
+import { Product } from '../../../../../../../store/createNotificationSlices/specificProductsSlice';
 import { IData, } from '../ModalActivate';
 
   

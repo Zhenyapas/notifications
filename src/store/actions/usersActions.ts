@@ -1,5 +1,5 @@
 
-import { userSlice } from './../slices/userSlice';
+import { userSlice } from '../createNotificationSlices/userSlice';
 import { AppDispatch } from "../index";
 import axios from "axios";
 import { getUsers} from "../../axios/axios"

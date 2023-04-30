@@ -2,7 +2,7 @@ import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 import { NotificationRecipient } from '../../models/notificationsResponce';
 
 
-interface INotificationData {
+export interface INotificationData {
 
   notification_recipients: object[]
   selected_products: object[]
@@ -32,29 +32,18 @@ interface INotificationData {
       }
     ],
     selected_products: [
-      {
-        product_id: "string",
-        product_variants_ids: [
-          "string"
-        ]
-      },
-   {
-        product_id: "string2",
-        product_variants_ids: [
-          
-        ]
-      }
+ 
     ],
-    name: "string",
+    name: '',
     days_to_send: [
-      "MON"
+      
     ],
-    send_hour: 2147483647,
-    time_zone: 2147483647,
+    send_hour: 0,
+    time_zone: 0,
     locations: [
-      "string"
+      ""
     ],
-    low_inventory_threshold: 2147483647
+    low_inventory_threshold: 0
   }
 };
 
@@ -65,6 +54,13 @@ export const createNotificationDataSlice = createSlice({
     initialState,
     
     reducers : {
+
+
+      fetchError(state, action: PayloadAction<Error>){
+
+        state.loading = false;
+        state.error = action.payload.message;
+      },
 
 
         setSelectedProducts(state,action:PayloadAction<object[]>) {
