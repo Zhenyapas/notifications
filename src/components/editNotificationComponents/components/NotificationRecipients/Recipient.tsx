@@ -7,22 +7,38 @@ import {
     Icon,
   } from '@shopify/polaris';
   import {DeleteMinor} from '@shopify/polaris-icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../../hooks/redux';
 import { NotificationRecipient } from '../../../../models/notificationsResponce';
 import { setNotificationRecipients } from '../../../../store/actions/notificationsActions';
  
 
   
-  function Recipient({arrRecipients}:{arrRecipients: NotificationRecipient[]}) {
+  function Recipient({arrRecipients,removeRecipient:pushIndexRemove}:{arrRecipients: NotificationRecipient[],removeRecipient:(index:number) => void}) {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => dispatch(setNotificationRecipients(arrRecipients)) , [arrRecipients] );
+    const [recipients,setRecipients] = useState<NotificationRecipient[]>(arrRecipients)
+
+    useEffect(() => {
+      dispatch(setNotificationRecipients(recipients));
+      setRecipients(arrRecipients);
+    } , [recipients] );
+
 
     const arr = arrRecipients.map(e => {
      return {id:e.recipient,url:'',mail:e.recipient,name:`${e.first_name} ${e.last_name}`}
     })
+
+
+    const remove = (index:number) => {
+
+      const newRecipients = recipients.filter((_,i) => i === index );
+
+      pushIndexRemove(index);
+
+      setRecipients(newRecipients);
+    }
 
  
     return (
@@ -30,7 +46,7 @@ import { setNotificationRecipients } from '../../../../store/actions/notificatio
         <ResourceList
           resourceName={{singular: 'customer', plural: 'customers'}}
           items={arr}
-          renderItem={(item) => {
+          renderItem={(item,_,index) => {
             const {id, name, mail} = item;
 
   
@@ -56,7 +72,7 @@ import { setNotificationRecipients } from '../../../../store/actions/notificatio
                  
                     <div style = {{flexGrow:'1', display:'flex', justifyContent:'flex-end',alignItems:'center',paddingRight:'20px'}}>
                     <ButtonGroup segmented>
-                      <Button>Remove</Button>
+                      <Button onClick={() => remove(index)}>Remove</Button>
                       <Button icon={() => <Icon source={DeleteMinor} /> }/>
                     </ButtonGroup>
 

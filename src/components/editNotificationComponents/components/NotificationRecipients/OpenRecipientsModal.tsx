@@ -12,10 +12,10 @@ import { NotificationRecipient } from '../../../../models/notificationsResponce'
 
 
 
- const arr:NotificationRecipient[] = [];
+ const arr1:NotificationRecipient[] = [];
 
 
-function OpenModalRecipients({onClose,title,pullData:pushData}:{onClose:(flag:boolean) => void,title:string,pullData:(obj:NotificationRecipient) => void}) {
+function OpenModalRecipients({onClose,title,pullData:pushData,arrRecipients}:{onClose:(flag:boolean) => void,title:string,pullData:(obj:NotificationRecipient) => void,arrRecipients:NotificationRecipient[]}) {
 
     const {value,onChange} = useSelect('default');
     const {value:value2,onChange:onChange2} = useSelect('');
@@ -35,12 +35,12 @@ function OpenModalRecipients({onClose,title,pullData:pushData}:{onClose:(flag:bo
     const pullData = (obj:NotificationRecipient):void =>  {
 
 
-       if(arr.find((e) => e.recipient === obj.recipient)) {
+       if(arrRecipients.find((e) => e.recipient === obj.recipient)) {
 
           return
        }   
        
-       arr.push(obj);
+       /* arr.push(obj); */
 
        pushData(obj);
        onClose(false);
