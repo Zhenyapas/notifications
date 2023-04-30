@@ -38,7 +38,7 @@ const SearchField = ({type}:{type:string}) => {
 
        console.log(obj)
        setData(obj);
-
+       
     }
 
 

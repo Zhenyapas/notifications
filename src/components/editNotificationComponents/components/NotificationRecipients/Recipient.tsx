@@ -7,23 +7,29 @@ import {
     Icon,
   } from '@shopify/polaris';
   import {DeleteMinor} from '@shopify/polaris-icons';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../../../hooks/redux';
+import { NotificationRecipient } from '../../../../models/notificationsResponce';
+import { setNotificationRecipients } from '../../../../store/actions/notificationsActions';
+ 
 
   
-  function Recipient() {
+  function Recipient({arrRecipients}:{arrRecipients: NotificationRecipient[]}) {
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => dispatch(setNotificationRecipients(arrRecipients)) , [arrRecipients] );
+
+    const arr = arrRecipients.map(e => {
+     return {id:e.recipient,url:'',mail:e.recipient,name:`${e.first_name} ${e.last_name}`}
+    })
 
  
     return (
      <>
         <ResourceList
           resourceName={{singular: 'customer', plural: 'customers'}}
-          items={[
-            {
-              id: '100',
-              url: '#',
-              name: 'Kostia O',
-              mail: 'costefan33@gmail.com',
-            },
-          ]}
+          items={arr}
           renderItem={(item) => {
             const {id, name, mail} = item;
 

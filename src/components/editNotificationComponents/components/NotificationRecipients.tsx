@@ -1,5 +1,6 @@
 import { AlphaCard, AlphaStack, Box, Button,  Columns, Divider, Text,  } from "@shopify/polaris";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { NotificationRecipient } from "../../../models/notificationsResponce";
 import OpenModalRecipients from "./NotificationRecipients/OpenRecipientsModal";
 import Recipient from "./NotificationRecipients/Recipient";
 
@@ -13,6 +14,16 @@ const NotificationRecipients = () => {
 
 
   const [isModal,setModal] = useState(false);
+
+
+
+  const [arrRecipients,setArrRecipient] = useState<NotificationRecipient[]>([])
+
+  const pullData = (obj:NotificationRecipient):void => {
+
+     setArrRecipient((prev) => [...prev,obj]);
+
+  }
 
 
 
@@ -55,14 +66,14 @@ const NotificationRecipients = () => {
             <AlphaCard roundedAbove="sm" >
               <AlphaStack gap="4">
 
-                <Recipient />
+                <Recipient arrRecipients={arrRecipients} />
 
               </AlphaStack>
 
             </AlphaCard>
 
 
-            {(isModal) &&  <OpenModalRecipients title='Add a notification recipient' onClose={() => setModal(!isModal)} />}
+            {(isModal) &&  <OpenModalRecipients title='Add a notification recipient' onClose={() => setModal(!isModal)} pullData={pullData} />}
 
 
             <div style={{marginTop:'30px'}}></div>

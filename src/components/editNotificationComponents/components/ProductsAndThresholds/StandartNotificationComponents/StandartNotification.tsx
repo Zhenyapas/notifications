@@ -1,5 +1,8 @@
 import { AlphaCard, AlphaStack, TextField } from "@shopify/polaris";
+import { useEffect } from "react";
+import { useAppDispatch } from "../../../../../hooks/redux";
 import useSelect from "../../../../../hooks/UseSelectHook";
+import { setThreshold } from "../../../../../store/actions/notificationsActions";
 import BrowseProducts from "./BrowseProducts";
 
 
@@ -8,6 +11,11 @@ const StandartNotifications = () => {
 
 
  const {value,onChange} = useSelect('1')
+
+ const dispatch = useAppDispatch()
+
+
+ useEffect(() => dispatch(setThreshold(+value)) );
 
     return (
 

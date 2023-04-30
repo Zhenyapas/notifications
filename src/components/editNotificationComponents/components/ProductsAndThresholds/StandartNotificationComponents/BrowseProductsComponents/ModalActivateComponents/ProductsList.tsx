@@ -3,10 +3,8 @@ import {
     ResourceItem,
     Text,
     Button,
-    ButtonGroup,
-    Icon,
   } from '@shopify/polaris';
-  import {DeleteMinor} from '@shopify/polaris-icons';
+
 import { useEffect, useState } from 'react';
 import { Product } from '../../../../../../../store/slices/specificProductsSlice';
 import { IData } from '../ModalActivate';
@@ -16,27 +14,39 @@ import { IData } from '../ModalActivate';
 
     
 
-    const [obj, setObj] = useState<any>(false);
+    const [obj, setObj] = useState<IData>({selected:[''],subSelected:{'1K':['23']}})
+
+    
+
+   
     
 
     useEffect(() => {
       setObj(object);
       console.log(object)
-      console.log(productsData);
+
+      console.log(obj)
+
+      console.log(items)
+    
+
     },[object]);
 
+
+  
+
+    let arr:string[] = []
+
+   
+    if (object && obj.selected) {
+         const subSelected = [...Object.keys(object.subSelected)];
+         arr = Array.from(new Set([...object.selected,...subSelected]));
+    }
     
-
-     if(obj) { 
-
-       obj.selected.push(...Object.keys(obj.subSelected));
-      
-      }
-
-    
+     
 
 
-     const items = (obj) ? [...new Set(object.selected)].map((idItem) => {
+    const items = (object && obj.selected) ? arr.map((idItem:string) => {
 
 
         const index = productsData.findIndex(obj => obj.id.toString() === idItem)
@@ -56,7 +66,7 @@ import { IData } from '../ModalActivate';
             subItems:(quantitySubItems) ? `${quantitySubItems} variants selected` : false
 
         }
-      }) : []
+      }) : [] 
     
 
     return (

@@ -1,5 +1,7 @@
 import { Modal, LegacyStack,} from '@shopify/polaris';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../../../../hooks/redux';
+import { setSelectedProducts } from '../../../../../../store/actions/notificationsActions';
 import SearchListWithSelection from './ModalActivateComponents/SearchListWithSelection';
 
 export interface IData {
@@ -28,6 +30,9 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
   useEffect(() => pushData(data),[data]);
 
 
+  const dispatch = useAppDispatch();
+
+
   const pullData = (obj:any) => {
 
 
@@ -40,7 +45,14 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
 
     
 
-    setData(obj);
+    setData({...obj,selected:Array.from(new Set(obj.selected))});
+
+    
+
+    pushData(obj);
+
+    dispatch(setSelectedProducts(obj));
+
 
   }
 
@@ -58,6 +70,7 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
           content: 'Add',
           onAction: () => {
             console.log(data);
+            (data) && dispatch(setSelectedProducts(data));
             onClose(false);
           },
           disabled:isDisabled,
@@ -76,8 +89,6 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
           <LegacyStack vertical>
             
             <SearchListWithSelection type={type} pullData={pullData} />
-
-   {/*         {(data) &&  <ProductsList obj={data} productsData={productsData}  /> } */}
 
           </LegacyStack>
         </Modal.Section>

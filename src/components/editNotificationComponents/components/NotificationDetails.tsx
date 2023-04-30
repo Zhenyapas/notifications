@@ -1,6 +1,8 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Select, Text, TextField } from "@shopify/polaris";
+import { useAppDispatch } from "../../../hooks/redux";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
 import useSelect from "../../../hooks/UseSelectHook";
+import { setNameNotification } from "../../../store/actions/notificationsActions";
 import SheduleNotification from "./NotificationDetails/SheduleNotification";
 
 
@@ -8,7 +10,7 @@ import SheduleNotification from "./NotificationDetails/SheduleNotification";
 const NotificationDetails = ({id}:{id:string}) => {
 
 
-  
+  const dispatch = useAppDispatch()
 
 
   const {value:selected,onChange:onChange1} = useChoiceList(['optional']);
@@ -43,14 +45,23 @@ const NotificationDetails = ({id}:{id:string}) => {
             <AlphaCard roundedAbove="sm">
               <AlphaStack gap="4">
 
-                <TextField label="Notification name" autoComplete='off' value={value2} onChange={(e) => onChange3(e) } />
+                <TextField 
+                label="Notification name"
+                autoComplete='off'
+                onBlur={() => {
+                  console.log('INPUT FETCH');
+                  dispatch(setNameNotification(value2));
+                }} 
+                value={value2} 
+                onChange={(e) => onChange3(e) } 
+                />
                 
-                <Select
+{/*                 <Select
                   label="Weight unit"
                   options={['Active', 'Inactive']}
                   value={value1}
                   onChange={((e) => onChange2(e))}
-                />
+                /> */}
 
                
                   <ChoiceList

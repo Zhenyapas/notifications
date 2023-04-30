@@ -9,7 +9,7 @@ import {
   import {SearchMinor} from '@shopify/polaris-icons';
   import {useState, useCallback, useMemo, useEffect} from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { fetchLocations } from '../../../../store/actions/notificationsActions';
+import { fetchLocations, setLocations } from '../../../../store/actions/notificationsActions';
 
   
   function LocationComboBox({type}:{type:string}) {
@@ -60,7 +60,9 @@ import { fetchLocations } from '../../../../store/actions/notificationsActions';
 
 
 
-    useEffect(()=> console.log(selectedOptions),[selectedOptions]);
+    useEffect(()=> {
+      dispatch(setLocations(selectedOptions));
+    },[selectedOptions]);
   
     const updateText = useCallback(
       (value: string) => {

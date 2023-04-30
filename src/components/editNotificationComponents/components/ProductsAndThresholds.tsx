@@ -1,4 +1,6 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Divider, Text, } from "@shopify/polaris";
+import { useEffect } from "react";
+import { useAppSelector } from "../../../hooks/redux";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
 
 import StandartNotifications from "./ProductsAndThresholds/StandartNotificationComponents/StandartNotification";
@@ -7,6 +9,12 @@ import StandartNotifications from "./ProductsAndThresholds/StandartNotificationC
 
 
 const ProductsAndNotifications= () => {
+
+
+  const productsNotification = useAppSelector(state => state.createNotificationData.data?.selected_products);
+
+
+  useEffect(() => console.log(productsNotification),[productsNotification]);
 
 
 

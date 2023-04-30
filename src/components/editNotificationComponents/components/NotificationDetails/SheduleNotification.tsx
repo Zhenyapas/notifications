@@ -1,10 +1,16 @@
 import {AlphaCard,Select,Checkbox,AlphaStack} from '@shopify/polaris';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../../hooks/redux';
 import useDaysCheckBox from '../../../../hooks/UseDaysCheckBoxHook';
 
 import useSelect from '../../../../hooks/UseSelectHook';
+import { setDaysToSend, setHour, setTimeZone } from '../../../../store/actions/notificationsActions';
  
 import { timeZone } from '../../../../variables/timeZone';
+
+
+
+
 
 const initialDays = [
   { day: "Mon", active: false },
@@ -17,6 +23,9 @@ const initialDays = [
 ];
   
   function SheduleNotification() {
+
+
+    const dispatch = useAppDispatch();
 
     const weekDays: IDay[] = [
       { day: "Mon", active: false },
@@ -32,13 +41,51 @@ const initialDays = [
     const [days,setDays] = useState(weekDays);
 
     const changeDays = (arr:IDay[]) => {
+
       setDays(arr);
+     
     }
+
+    
 
 
    
     const {value:value2,onChange:onChange2} = useSelect(timeZone().arrDate[0]);
     const {value:value3,onChange:onChange3} = useSelect(timeZone().timeZones[0]);
+
+ 
+    const parseHours = (str:string):number => {
+
+      const regex=/^(\d+):/
+      const match = str.match(regex);
+
+      return (match ) ? parseInt(match[1]) : 0
+    }
+
+
+    function parseTimeZone(str:string):number {
+      
+      const regex = /GMT([+-]\d+):/;
+      const match = str.match(regex);
+    
+      if (match && match[1]) {
+        const numberBeforeColon = parseInt(match[1]);
+        return numberBeforeColon;
+      }
+      
+      return 0;
+    }
+
+
+    useEffect(() => {
+      dispatch(setHour(parseHours(value2)));
+    },[value2]);
+
+
+
+    useEffect(() => {
+      dispatch(setTimeZone(parseTimeZone(value3)))
+    },[value3]);
 
 
   
@@ -87,6 +134,17 @@ interface IDay {
 
 
   const {days,handleDayChange } = useDaysCheckBox(wDays ? wDays : initialDays)
+
+  const dispatch = useAppDispatch()
+
+
+  useEffect(() => {
+
+    const parseDays = days.filter((e:any) => e.active ).map((e:any) => e.day.toUpperCase());
+    dispatch(setDaysToSend(parseDays));
+
+
+  },[days]);
 
 
   return (
