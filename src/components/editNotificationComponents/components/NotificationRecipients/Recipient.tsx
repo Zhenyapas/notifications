@@ -40,6 +40,10 @@ import { setNotificationRecipients } from '../../../../store/actions/notificatio
       setRecipients(newRecipients);
     }
 
+
+
+    if(arrRecipients.length === 0) return <div style={{margin:'auto'}}>You haven't added any notification recipients yet</div>
+
  
     return (
      <>
