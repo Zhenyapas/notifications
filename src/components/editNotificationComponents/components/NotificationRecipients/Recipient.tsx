@@ -5,10 +5,11 @@ import {
     Button,
     ButtonGroup,
     Icon,
+    InlineError,
   } from '@shopify/polaris';
   import {DeleteMinor} from '@shopify/polaris-icons';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { NotificationRecipient } from '../../../../models/notificationsResponce';
 import { setNotificationRecipients } from '../../../../store/actions/notificationsActions';
  
@@ -17,6 +18,10 @@ import { setNotificationRecipients } from '../../../../store/actions/notificatio
   function Recipient({arrRecipients,removeRecipient:pushIndexRemove}:{arrRecipients: NotificationRecipient[],removeRecipient:(index:number) => void}) {
 
     const dispatch = useAppDispatch();
+
+    const validationState = useAppSelector((state) => state.createNotificationData.validation);
+
+    const {notification_recipients:error} = validationState
 
     const [recipients,setRecipients] = useState<NotificationRecipient[]>(arrRecipients)
 
@@ -42,9 +47,15 @@ import { setNotificationRecipients } from '../../../../store/actions/notificatio
 
 
 
-    if(arrRecipients.length === 0) return <div style={{margin:'auto'}}>You haven't added any notification recipients yet</div>
+    if(arrRecipients.length === 0) return <>
+    <div style={{margin:'auto'}}>You haven't added any notification recipients yet</div>
+    {(error) && 
+      <div style={{margin:'auto '}}>
+        <InlineError message="At least 1 notification recipient is required" fieldID="recipients" />
+      </div>}
+    </>
 
- 
+    
     return (
      <>
         <ResourceList

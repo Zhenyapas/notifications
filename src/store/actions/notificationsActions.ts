@@ -1,10 +1,10 @@
+import { AppDispatch } from './../index';
 import { getNotificationsData,deleteNotificationAxios, postNewNotification } from './../../axios/axios';
 import { getLocationsData,getSpecificProductsData} from '../../axios/axios';
 import {locationsSlice } from '../createNotificationSlices/locationsSlice';
-import { AppDispatch } from "../index";
 import axios from "axios";
 import { specificProductsSlice } from '../createNotificationSlices/specificProductsSlice';
-import {createNotificationDataSlice, INotificationData} from '../createNotificationSlices/createNotificationDataSlice';
+import {createNotificationDataSlice, INotificationData, ValidationKey} from '../createNotificationSlices/createNotificationDataSlice';
 import { recipientsSlice} from '../createNotificationSlices/recipientsSlice';
 import { IResponseNotifications, NotificationRecipient } from '../../models/notificationsResponce';
 import { notificationsSlice } from '../NotificationsSlices/NotificationsSlices';
@@ -115,9 +115,12 @@ export const postNewNote = (data:INotificationData) => {
 
       try {
 
-         dispatch(notificationsSlice.actions.fetching());
+         
 
          const post = await axios.request(postNewNotification(data));
+
+         dispatch(notificationsSlice.actions.fetching());
+
          const response:IResponseNotifications = await  (await axios.request(getNotificationsData)).data;
 
          dispatch(notificationsSlice.actions.fetchSuccess(response));
@@ -253,6 +256,9 @@ export const setNotificationRecipients= (obj:NotificationRecipient[]) => {
 
 }
 
+export const startValidation = (requiredArr:ValidationKey[]) => {
 
+  return (dispatch:AppDispatch) => dispatch(createNotificationDataSlice.actions.startValidation(requiredArr))
 
+}
 

@@ -3,50 +3,35 @@ import {
     ResourceItem,
     Text,
     Button,
+    InlineError,
   } from '@shopify/polaris';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/redux';
+import { setSelectedProducts } from '../../../../../../../store/actions/notificationsActions';
 
-import { useEffect, useState } from 'react';
 import { Product } from '../../../../../../../store/createNotificationSlices/specificProductsSlice';
 import { IData } from '../ModalActivate';
 
   
   function ProductsList({object,productsData}:{object:IData, productsData:Product[]}) {
 
-    
+    const dispatch = useAppDispatch();
+    const validationState = useAppSelector((state) => state.createNotificationData.validation);
 
-    const [obj, setObj] = useState<IData>({selected:[''],subSelected:{'1K':['23']}})
-
-    
-
-   
-    
-
-    useEffect(() => {
-      setObj(object);
-      console.log(object)
-
-      console.log(obj)
-
-      console.log(items)
-    
-
-    },[object]);
-
-
-  
+    const {selected_products:error} = validationState
 
     let arr:string[] = []
 
    
-    if (object && obj.selected) {
+    if (object && object.selected) {
          const subSelected = [...Object.keys(object.subSelected)];
          arr = Array.from(new Set([...object.selected,...subSelected]));
     }
     
-     
+     useEffect(() => {(object) && dispatch(setSelectedProducts(object))} ,[object]);
 
 
-    const items = (object && obj.selected) ? arr.map((idItem:string) => {
+    const items = (object && object.selected) ? arr.map((idItem:string) => {
 
 
         const index = productsData.findIndex(obj => obj.id.toString() === idItem)
@@ -55,7 +40,7 @@ import { IData } from '../ModalActivate';
 
         const {title} = productsData[index]
 
-        const quantitySubItems = (obj.subSelected[idItem]) ? obj.subSelected[idItem]?.length : false
+        const quantitySubItems = (object.subSelected[idItem]) ? object.subSelected[idItem]?.length : false
         
 
          return {
@@ -67,7 +52,8 @@ import { IData } from '../ModalActivate';
 
         }
       }) : [] 
-    
+      
+      if(error) return <> <InlineError message="At least 1 product or variant is required" fieldID="productsList" /> </>
 
     return (
      <>

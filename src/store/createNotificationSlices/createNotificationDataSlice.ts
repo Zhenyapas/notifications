@@ -16,21 +16,36 @@ export interface INotificationData {
 }
 
  interface INotificationsState {
-
+  validation:IValidation,
   loading:boolean,
   error:string,
   data :INotificationData
  }
 
+ interface IValidation {
+  notification_recipients:boolean,
+  selected_products:boolean,
+  name:boolean,
+  days_to_send:boolean,
+  locations:boolean,
+
+}
+
+export type ValidationKey = keyof IValidation;
+
  const initialState: INotificationsState = {
+  
   loading:false,
+  validation: {
+    notification_recipients:false,
+    selected_products:false,
+    name:false,
+    days_to_send:false,
+    locations:false
+  },
   error:'',
   data: {
-    notification_recipients: [
-
-      {
-      }
-    ],
+    notification_recipients: [],
     selected_products: [
  
     ],
@@ -43,7 +58,7 @@ export interface INotificationData {
     locations: [
       ""
     ],
-    low_inventory_threshold: 0
+    low_inventory_threshold: 1
   }
 };
 
@@ -56,11 +71,11 @@ export const createNotificationDataSlice = createSlice({
     reducers : {
 
 
-      fetchError(state, action: PayloadAction<Error>){
+        fetchError(state, action: PayloadAction<Error>){
 
-        state.loading = false;
-        state.error = action.payload.message;
-      },
+          state.loading = false;
+          state.error = action.payload.message;
+        },
 
 
         setSelectedProducts(state,action:PayloadAction<object[]>) {
@@ -79,41 +94,41 @@ export const createNotificationDataSlice = createSlice({
         setNotificationName(state,action:PayloadAction<string>) {
 
           state.data.name = action.payload
-      },
+        },
 
       setNotificationRecipients(state,action:PayloadAction<NotificationRecipient[]>) {
 
         state.data.notification_recipients = action.payload
-      },
+        },
 
 
       setDaysToSend(state,action:PayloadAction<string[]>) {
 
         state.data.days_to_send = action.payload
-      },
+        },
 
       setHours(state,action:PayloadAction<number>) {
 
         state.data.send_hour = action.payload
-      },
+        },
 
       setTimeZone(state,action:PayloadAction<number>) {
 
         state.data.time_zone = action.payload
-      },
+        },
 
 
       setThreshold(state,action:PayloadAction<number>) {
 
         state.data.low_inventory_threshold= action.payload
-      },
+        },
+      
+      startValidation(state,action: PayloadAction<ValidationKey[]>){
 
-
-
-
-
-
-        
+         for(const key in state.validation) {
+          state.validation[key as ValidationKey] = action.payload.includes(key as ValidationKey);
+         }
+      }
 
     
     }

@@ -5,6 +5,7 @@ import {
     Icon,
     LegacyStack,
     AutoSelection,
+    InlineError,
   } from '@shopify/polaris';
   import {SearchMinor} from '@shopify/polaris-icons';
   import {useState, useCallback, useMemo, useEffect} from 'react';
@@ -18,7 +19,9 @@ import { fetchLocations, setLocations } from '../../../../store/actions/notifica
     const dispatch = useAppDispatch();
 
 
-    
+    const validationState = useAppSelector((state) => state.createNotificationData.validation);
+
+    const {locations:error} = validationState
 
 
     useEffect(() => {
@@ -113,8 +116,7 @@ import { fetchLocations, setLocations } from '../../../../store/actions/notifica
     ));
   
     const optionsMarkup =
-      options.length > 0
-        ? options.map((option) => {
+      options.map((option) => {
             const {label, value} = option;
   
             return (
@@ -128,7 +130,7 @@ import { fetchLocations, setLocations } from '../../../../store/actions/notifica
               </Listbox.Option>
             );
           })
-        : null;
+       
   
     return (
       <>
@@ -146,15 +148,17 @@ import { fetchLocations, setLocations } from '../../../../store/actions/notifica
             />
           }
         >
-          {optionsMarkup ? (
+         
             <Listbox
               autoSelection={AutoSelection.None}
               onSelect={updateSelection}
             >
               {optionsMarkup}
             </Listbox>
-          ) : null}
+   
         </Combobox>
+
+        {(error) && <InlineError message="At least 1 product or variant is required" fieldID="locations" /> }
 
           <LegacyStack>{tagsMarkup}</LegacyStack>
    

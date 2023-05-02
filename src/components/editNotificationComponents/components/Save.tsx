@@ -1,8 +1,8 @@
 import { Button } from "@shopify/polaris";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { postNewNote } from "../../../store/actions/notificationsActions";
+import { postNewNote, startValidation } from "../../../store/actions/notificationsActions";
+import { validateNotificationData } from "../../../validation/CreateNotofocationDataValidation";
 
 
 
@@ -11,18 +11,17 @@ const Save = () => {
 
     const createNotificationData = useAppSelector(state => state.createNotificationData);
 
-    const {data,error} = createNotificationData;
+    const {data} = createNotificationData;
 
     const dispatch = useAppDispatch()
-
-    const [newData,updateData] = useState(data)
 
     const navigate = useNavigate();
 
 
+    const arrKeys:any = (validateNotificationData(data))
 
-    useEffect(() =>  updateData(data), [createNotificationData])
 
+ 
 
     return (
 
@@ -32,18 +31,17 @@ const Save = () => {
                 primary   
                 onClick={(() => {
 
-                    console.log(newData)
-
-                    if(error) {
-
-                        // Here could be validation
-                        return
+                    if(!validateNotificationData(data)) {
+                        console.log('OK!');
+                        dispatch(postNewNote(data));
+                        navigate('/');
+                    } else {
+                        // here will be validation of CreateNotofocationData fields
+                        dispatch(startValidation(arrKeys));
+                        console.log(data);
+                        console.log(arrKeys);
+                        return 
                     }
-
-                    dispatch(postNewNote(newData))
-                    
-                    navigate('/')
-
 
                 })}
             >

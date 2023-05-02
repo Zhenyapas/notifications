@@ -1,5 +1,5 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Select, Text, TextField } from "@shopify/polaris";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
 import useSelect from "../../../hooks/UseSelectHook";
 import { setNameNotification } from "../../../store/actions/notificationsActions";
@@ -9,8 +9,11 @@ import SheduleNotification from "./NotificationDetails/SheduleNotification";
 
 const NotificationDetails = ({id}:{id:string}) => {
 
-
+  const validationState = useAppSelector((state) => state.createNotificationData.validation)
   const dispatch = useAppDispatch()
+
+
+  const {name:error} = validationState
 
 
   const {value:selected,onChange:onChange1} = useChoiceList(['optional']);
@@ -18,6 +21,16 @@ const NotificationDetails = ({id}:{id:string}) => {
   const {value:value1,onChange:onChange2} = useSelect('Active');
 
   const {value:value2,onChange:onChange3} = useSelect(id|| "");
+
+  function isValueInvalid(content: string) {
+    if (!content) {
+      return true;
+    }
+
+    return content.length < 1;
+  }
+
+  const isInvalid = (error) ? isValueInvalid(value2) : '';
 
     return (
 
@@ -52,6 +65,7 @@ const NotificationDetails = ({id}:{id:string}) => {
                   console.log('INPUT FETCH');
                   dispatch(setNameNotification(value2));
                 }} 
+                error={isInvalid}
                 value={value2} 
                 onChange={(e) => onChange3(e) } 
                 />

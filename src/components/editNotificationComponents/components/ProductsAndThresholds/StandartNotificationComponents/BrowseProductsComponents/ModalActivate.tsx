@@ -51,7 +51,7 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
 
     pushData(obj);
 
-    dispatch(setSelectedProducts(obj));
+    //dispatch(setSelectedProducts(obj));
 
 
   }
@@ -70,7 +70,7 @@ function OpenModal({onClose,type,pushData}:{onClose:(flag:boolean) => void,type:
           content: 'Add',
           onAction: () => {
             console.log(data);
-            (data) && dispatch(setSelectedProducts(data));
+           // (data) && dispatch(setSelectedProducts(data));
             onClose(false);
           },
           disabled:isDisabled,
