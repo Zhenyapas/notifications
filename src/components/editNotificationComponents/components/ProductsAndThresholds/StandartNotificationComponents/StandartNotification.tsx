@@ -34,7 +34,7 @@ const StandartNotifications = () => {
                 />
 
                 <BrowseProducts title='Include in this notification' />
-                <BrowseProducts title='Exclude from this notification' />
+                <BrowseProducts title='Exclude from this notification' hidden />
 
               </AlphaStack>
             </AlphaCard>

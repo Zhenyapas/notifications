@@ -1,5 +1,4 @@
 import {Page} from '@shopify/polaris';
-import AdditionalSettings from '../components/AdditionalSettings';
 import Locations from '../components/editNotificationComponents/components/Locations';
 import NotificationDetails from '../components/editNotificationComponents/components/NotificationDetails';
 import NotificationRecipients from '../components/editNotificationComponents/components/NotificationRecipients';

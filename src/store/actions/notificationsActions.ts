@@ -135,7 +135,7 @@ export const postNewNote = (data:INotificationData) => {
 }
 
 
-interface SelectedObj {
+export interface SelectedObj {
         selected: string[];
         subSelected: { [key: string]: string[] };
       }
