@@ -5,7 +5,7 @@ import {
     Button,
     InlineError,
   } from '@shopify/polaris';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/redux';
 import { setSelectedProducts } from '../../../../../../../store/actions/notificationsActions';
 
@@ -22,16 +22,27 @@ import { IData } from '../ModalActivate';
 
     let arr:string[] = []
 
+    const [obj,setObj] = useState(object);
+
    
-    if (object && object.selected) {
-         const subSelected = [...Object.keys(object.subSelected)];
-         arr = Array.from(new Set([...object.selected,...subSelected]));
+    if (obj && obj.selected) {
+         const subSelected = [...Object.keys(obj.subSelected)];
+         arr = Array.from(new Set([...obj.selected,...subSelected]));
     }
     
-     useEffect(() => {(object) && dispatch(setSelectedProducts(object))} ,[object]);
+     useEffect(() => {
+       setObj(object);
+      } ,[object]);
+
+      useEffect(() => {
+        (obj) && dispatch(setSelectedProducts(obj));
+      },[obj]);
 
 
-    const items = (object && object.selected) ? arr.map((idItem:string) => {
+    
+
+
+    const items = (obj && obj.selected) ? arr.map((idItem:string) => {
 
 
         const index = productsData.findIndex(obj => obj.id.toString() === idItem)
@@ -40,7 +51,7 @@ import { IData } from '../ModalActivate';
 
         const {title} = productsData[index]
 
-        const quantitySubItems = (object.subSelected[idItem]) ? object.subSelected[idItem]?.length : false
+        const quantitySubItems = (obj.subSelected[idItem]) ? obj.subSelected[idItem]?.length : false
         
 
          return {
@@ -51,9 +62,21 @@ import { IData } from '../ModalActivate';
             subItems:(quantitySubItems) ? `${quantitySubItems} variants selected` : false
 
         }
-      }) : [] 
+      }) : [] ;
+
+      const removeItem = (id:string) => {
+
+        const index = obj.selected.findIndex(idSelected =>  idSelected === id);
+
+        const newSelected = [...obj.selected.slice(0,index), ...obj.selected.slice(index+1,-1)];
+
+        const newSubselected = {...obj.subSelected};
+        delete newSubselected[id];
+
+        setObj({selected:newSelected,subSelected:newSubselected});
+      }
       
-      if(error) return <> <InlineError message="At least 1 product or variant is required" fieldID="productsList" /> </>
+      if(error && obj && obj.selected.length === 0) return <> <InlineError message="At least 1 product or variant is required" fieldID="productsList" /> </>
 
     return (
      <>
@@ -86,7 +109,7 @@ import { IData } from '../ModalActivate';
                  
                     <div style = {{flexGrow:'1', display:'flex', justifyContent:'flex-end',alignItems:'center',paddingRight:'20px'}}>
                   
-                      <Button plain >Remove</Button>
+                      <Button plain onClick={() => removeItem(id)} >Remove</Button>
                      
                    
 
