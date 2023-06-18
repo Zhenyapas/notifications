@@ -1,6 +1,6 @@
 import {AlphaCard,Select,Checkbox,AlphaStack} from '@shopify/polaris';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import useDaysCheckBox from '../../../../hooks/UseDaysCheckBoxHook';
 
 import useSelect from '../../../../hooks/UseSelectHook';
@@ -8,8 +8,16 @@ import { setDaysToSend, setHour, setTimeZone } from '../../../../store/actions/n
  
 import { timeZone } from '../../../../variables/timeZone';
 
+function getTimeZoneFromOffset(offset: number): string {
+  const timeZones = timeZone().timeZones
 
+  const index = offset + 11;
+  if (index >= 0 && index < timeZones.length) {
+    return timeZones[index];
+  }
 
+  return "";
+}
 
 
 const initialDays = [
@@ -22,7 +30,7 @@ const initialDays = [
   { day: "Sun", active: false },
 ];
   
-  function SheduleNotification() {
+  function SheduleNotification({type}:{type?:string}) {
 
 
     const dispatch = useAppDispatch();
@@ -35,10 +43,49 @@ const initialDays = [
       { day: "Fri", active: false },
       { day: "Sat", active: false },
       { day: "Sun", active: false },
+      
     ];
 
 
-    const [days,setDays] = useState(weekDays);
+  const data = useAppSelector((state) => state.editNotification);
+  const {days_to_send,send_hour,time_zone} = data.data;
+
+    const [days,setDays] = useState<IDay[]>(weekDays);
+;
+
+
+
+   
+
+const formatHours = (hours: number): string => {
+  const formattedHours = hours.toString().padStart(2, '0');
+  return `${formattedHours}:00`;
+};
+
+
+
+
+const {value:value2,onChange:onChange2,setValue:setValue2} = useSelect(timeZone().arrDate[0]);
+const {value:value3,onChange:onChange3,setValue:setValue3} = useSelect(timeZone().timeZones[0]);
+
+
+
+
+    useEffect(() => {
+      if(type === 'Edit') { 
+        
+        setDays(days.map(e => {
+         return  {day:e.day, active: days_to_send.includes(e.day.toUpperCase())} 
+        }
+        ));
+
+        setValue2(formatHours(send_hour));
+        console.log(value2);
+        setValue3(getTimeZoneFromOffset(time_zone));
+        console.log((time_zone))
+     
+      }
+    } , [data])
 
     const changeDays = (arr:IDay[]) => {
 
@@ -50,8 +97,7 @@ const initialDays = [
 
 
    
-    const {value:value2,onChange:onChange2} = useSelect(timeZone().arrDate[0]);
-    const {value:value3,onChange:onChange3} = useSelect(timeZone().timeZones[0]);
+
 
  
     const parseHours = (str:string):number => {
@@ -79,6 +125,7 @@ const initialDays = [
 
     useEffect(() => {
       dispatch(setHour(parseHours(value2)));
+
     },[value2]);
 
 
@@ -97,7 +144,7 @@ const initialDays = [
 
 
 
-                <DaysCheckBox days={days} changeDays={changeDays} />
+                <DaysCheckBox days={days} changeDays={changeDays} type="Edit" />
 
                 <Select
                   label="Send time"
@@ -129,19 +176,28 @@ interface IDay {
   active: boolean;
 }
 
- const DaysCheckBox = ({ days:wDays, changeDays }: { days?: IDay[],changeDays:(day:IDay[]) => void }) => {
+ const DaysCheckBox = ({ days:wDays, changeDays,type}: { days?: IDay[],type?:'Edit',changeDays:(day:IDay[]) => void }) => {
 
 
+  const {days,handleDayChange,updateDays} = useDaysCheckBox(initialDays);
 
-  const {days,handleDayChange } = useDaysCheckBox(wDays ? wDays : initialDays)
+  useEffect(() => {
 
+    updateDays(wDays);
+
+  },[wDays])
+
+ 
   const dispatch = useAppDispatch()
 
 
   useEffect(() => {
 
     const parseDays = days.filter((e:any) => e.active ).map((e:any) => e.day.toUpperCase());
+    
     dispatch(setDaysToSend(parseDays));
+
+    console.log(days);
 
 
   },[days]);

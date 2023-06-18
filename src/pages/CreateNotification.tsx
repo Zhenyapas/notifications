@@ -21,19 +21,12 @@ function CreateNotification() {
       <Page
         breadcrumbs={[{content: 'Notifications', url: '/'}]}
         title="Create Notification"
-        secondaryActions={[
-          {
-            content: 'Send now',
-            disabled: false,
-            helpText: '',
-          },
-        ]}
       >
 
 
       <div style={{marginTop:'20px'}}>
             
-          <NotificationDetails id='' />
+          <NotificationDetails  />
 
           <ProductsAndNotifications />
 

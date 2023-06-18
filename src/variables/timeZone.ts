@@ -28,6 +28,7 @@ export const timeZone = () => {
   "(GMT-01:00) Azores",
   "(GMT+00:00) London",
   "(GMT+01:00) Paris",
+  "(GMT+02:00) Kyiv",
   "(GMT+03:00) Moscow",
   "(GMT-05:00) Bogota",
   "(GMT+04:00) Dubai",

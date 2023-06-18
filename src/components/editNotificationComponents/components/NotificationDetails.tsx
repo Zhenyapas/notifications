@@ -1,26 +1,52 @@
 import { AlphaCard, AlphaStack, Box, ChoiceList, Columns, Select, Text, TextField } from "@shopify/polaris";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import useChoiceList from "../../../hooks/UseChoiceListHook";
 import useSelect from "../../../hooks/UseSelectHook";
+import { fetchNotificationById } from "../../../store/actions/notificationByIdActions";
 import { setNameNotification } from "../../../store/actions/notificationsActions";
 import SheduleNotification from "./NotificationDetails/SheduleNotification";
 
 
 
-const NotificationDetails = ({id}:{id:string}) => {
+const NotificationDetails = ({id,type = 'Create'}:{id?:string,type?:'Create'|'Edit'}) => {
 
   const validationState = useAppSelector((state) => state.createNotificationData.validation)
   const dispatch = useAppDispatch()
 
 
-  const {name:error} = validationState
+  const {name:error} = validationState 
+
+
+  const dataById = useAppSelector(state => state.editNotification.data);
+  const {name} = dataById
+  
+  
+    useEffect(() => {
+      if(id) dispatch(fetchNotificationById(id));
+      console.log(dataById);
+    },[]);
+
+
+  
+
+    useEffect(() => {
+      console.log(dataById);
+      console.log(name);
+      onChange3(name)
+   
+    },[dataById]);
+
+
+
+ 
 
 
   const {value:selected,onChange:onChange1} = useChoiceList(['optional']);
 
   const {value:value1,onChange:onChange2} = useSelect('Active');
 
-  const {value:value2,onChange:onChange3} = useSelect(id|| "");
+  const {value:value2,onChange:onChange3} = useSelect(name || "");
 
   function isValueInvalid(content: string) {
     if (!content) {
@@ -103,7 +129,7 @@ const NotificationDetails = ({id}:{id:string}) => {
 
             <div style={{marginTop:'30px'}}></div>
          
-            <SheduleNotification />
+            <SheduleNotification type={type} />
          
             
         </Columns>

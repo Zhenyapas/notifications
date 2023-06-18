@@ -6,16 +6,17 @@ import  specificProductsReducer from './createNotificationSlices/specificProduct
 import  createNotificationDataReducer from './createNotificationSlices/createNotificationDataSlice';
 import  recipientsReducer from './createNotificationSlices/recipientsSlice';
 import  notificationsReducer from './NotificationsSlices/NotificationsSlices';
+import editNotificationReducer from './editNotificationSlices/EditNotificationSlices';
 
 const rootReducer = combineReducers({
     
     locations:locationsReducer,
     specificProducts:specificProductsReducer,
     notification_recipients:recipientsReducer,
-
-
+    
     notificationsData:notificationsReducer,
-    createNotificationData:createNotificationDataReducer
+    createNotificationData:createNotificationDataReducer,
+    editNotification:editNotificationReducer
 
 })
 

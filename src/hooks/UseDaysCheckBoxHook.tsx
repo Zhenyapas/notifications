@@ -9,7 +9,8 @@ type UseDaysCheckBoxHook = (
   initialDays: Day[]
 ) => {
   days:any;
-  handleDayChange: any
+  handleDayChange: any;
+  updateDays:any;
 };
 
 const useDaysCheckBox: UseDaysCheckBoxHook = (initialDays) => {
@@ -25,7 +26,11 @@ const useDaysCheckBox: UseDaysCheckBoxHook = (initialDays) => {
     [days]
   );
 
-  return { days, handleDayChange };
+   const updateDays = (days:any) => {
+      setDays(days);
+   }
+
+  return { days, handleDayChange ,updateDays};
 };
 
 export default useDaysCheckBox;

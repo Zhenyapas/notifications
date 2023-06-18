@@ -1,14 +1,5 @@
 import { INotificationData } from "../store/createNotificationSlices/createNotificationDataSlice";
 
-const token = 'wm3gg940gy0xek1ld98uaizhz83c6rh2sir9f9fu';
-
-export const getUsers = {
-
-    method: 'GET',
-    url: 'https://api.json-generator.com/templates/ZM1r0eic3XEy/data',
-    headers: { Authorization: ` Bearer ${token} `}
-};
-
 
 export const getLocationsData = {
 
@@ -32,6 +23,20 @@ export const getNotificationsData = {
     }
 }
 
+
+export const getNotificationById = (id:string) => {
+
+  console.log(id);
+    
+  return {
+          method: 'GET',
+          url: `https://stock-notify-381217.ue.r.appspot.com/api/notifications/${id}/`,
+          headers: {
+              'accept': 'application/json',
+              'X-CSRFToken': 'eJIs6qAVJjP1Z9hVvfADzH6gnC73b9kA2BsUriSKq5OsufqzmOYEYqmJSKvoBfrE'
+            }
+          }
+}
 
 
 export const deleteNotificationAxios = (id:string) => {

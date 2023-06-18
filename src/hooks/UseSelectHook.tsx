@@ -8,11 +8,18 @@ type IUseSelect= (
 ) => {
   value:string;
   onChange: (value:string) => void
+  setValue: (value:string) => void
 };
 
 const useSelect: IUseSelect = (initialValue) => {
   
   const [value, setVal] = useState(initialValue);
+
+
+  const setValue = (val:string) => {
+
+    setVal(val);
+  }
 
   const onChange = useCallback(
     (event:string) => {
@@ -23,7 +30,7 @@ const useSelect: IUseSelect = (initialValue) => {
     [value]
   );
 
-  return { value, onChange };
+  return { value, onChange, setValue };
 };
 
 export default useSelect;

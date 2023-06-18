@@ -18,6 +18,8 @@ function EditNotification() {
 
     const params = useParams();
 
+    const id =(params.id) ? params.id.slice(2) : '';
+
   return (
 
       <Page
@@ -35,7 +37,7 @@ function EditNotification() {
 
       <div style={{marginTop:'20px'}}>
             
-          <NotificationDetails id={params?.id || ''}  />
+          <NotificationDetails id={id} type='Edit'  />
 
           <ProductsAndNotifications />
 
