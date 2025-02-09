@@ -134,6 +134,7 @@ export const specificProductsSlice = createSlice({
 
             state.loading = false;
             state.error = action.payload.message;
+            
         },
 
     

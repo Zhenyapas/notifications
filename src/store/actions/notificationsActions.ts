@@ -31,7 +31,7 @@ export const fetchNotificationData = () => {
 
       catch(e) {
           console.log(e);
-          dispatch(specificProductsSlice.actions.fetchError(e as Error));
+          dispatch(notificationsSlice.actions.fetchError(e as Error));
       }
   }
 }

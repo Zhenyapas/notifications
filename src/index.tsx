@@ -7,7 +7,7 @@ import { createRoot } from "react-dom/client";
 import { AppProvider } from "@shopify/polaris";
 import en from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { setUpStore } from './store';
 import { Provider } from 'react-redux';
 import App from './App';
@@ -21,7 +21,7 @@ const store = setUpStore();
 
 
 root.render(
-  <BrowserRouter  basename={process.env.PABLIC_URL}>
+  <HashRouter basename={process.env.PUBLIC_URL}>
 
     <AppProvider i18n={en}>
       
@@ -32,7 +32,7 @@ root.render(
 
     </AppProvider>
     
-  </BrowserRouter>
+  </HashRouter>
 );
 
 
